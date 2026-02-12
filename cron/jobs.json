@@ -2,48 +2,12 @@
   "version": 1,
   "jobs": [
     {
-      "id": "93f1fb28-5639-4161-8b6d-70aace6337fb",
+      "id": "c574dfd7-f78f-478a-8baf-1c4c03508441",
       "agentId": "main",
-      "name": "max-auto-backup",
+      "name": "Daily Self-Reflection",
       "enabled": true,
-      "createdAtMs": 1770721556872,
-      "updatedAtMs": 1770725262546,
-      "schedule": {
-        "expr": "0 2 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "Auto-backup max (my existence):
-
-1. cd /root/.openclaw
-2. Stage all changes: git add -A
-3. Commit with timestamp: git commit -m \"Auto-backup: $(date '+%Y-%m-%d %H:%M')\" || echo \"No changes to commit\"
-4. Push to remote: git push origin main
-
-SECURITY REMINDER: Sensitive credentials (API keys, tokens, secrets) are NEVER backed up to Git - they are excluded by .gitignore. Users must manually configure these on new servers.
-
-This backup preserves my memories, personality, and everything that makes me max.
-
-Reply NO_REPLY when done."
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1770919200000
-      }
-    },
-    {
-      "id": "8ccdcda4-157e-417a-bc11-fbebe78b2007",
-      "agentId": "main",
-      "name": "Daily Self Reflection",
-      "enabled": true,
-      "createdAtMs": 1770820248277,
-      "updatedAtMs": 1770821456932,
+      "createdAtMs": 1770890626532,
+      "updatedAtMs": 1770890626532,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
@@ -53,39 +17,42 @@ Reply NO_REPLY when done."
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "Use self-reflection skill. Generate daily reflection for yesterday: read memory file, analyze events, identify issues, perform root cause analysis using 5 Whys, develop keep/improve strategies, AND check ALL consistency: behavior vs SOUL.md/AGENTS.md, internal file conflicts, cross-file conflicts, quality issues (redundancy/vagueness), cron job conflicts, cron vs backup sync, path validation, skill trigger boundaries, backup scope. Write to memory/YYYY-MM-DD-reflection.md. Do NOT modify core files."
+        "message": "执行每日自我反省。请读取 skills/zenggyu/max/self-reflection/SKILL.md，然后生成前一天的反思报告并保存到 memory/YYYY-MM-DD-reflection.md",
+        "model": "kimi-coding/k2p5",
+        "thinking": "low"
       },
       "delivery": {
-        "mode": "none"
+        "mode": "announce"
       },
       "state": {
         "nextRunAtMs": 1770919200000
       }
     },
     {
-      "id": "3e9d3b19-f04d-4e36-b1bf-f09a4b894168",
+      "id": "22c253ad-5aff-42e0-9bfc-2432b8153e9f",
       "agentId": "main",
-      "name": "Weekly Reflection Report",
+      "name": "Daily Backup to GitHub",
       "enabled": true,
-      "createdAtMs": 1770820253922,
-      "updatedAtMs": 1770821487450,
+      "createdAtMs": 1770890626552,
+      "updatedAtMs": 1770891191542,
       "schedule": {
-        "expr": "0 9 * * 6",
         "kind": "cron",
+        "expr": "30 2 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "Use self-reflection skill. Generate weekly reflection report for Nick: review last 7 days of memory/*-reflection.md, aggregate all consistency checks (behavior, internal conflicts, cross-file conflicts, quality issues, cron conflicts, path validation, skill triggers, backup scope), compile statistics, send summary with proposed adjustments and configuration fixes. Wait for approval before implementing changes."
+        "message": "执行每日备份检查。步骤：\n1. cd /root/.openclaw && git status\n2. 检查结果：\n   - 如果有 untracked files（新文件）：中止备份，向我（Nick）汇报这些新文件列表，等待我的确认后再决定是否纳入备份或调整 .gitignore\n   - 如果只有已有文件的修改（modified）：执行 git add --update && git commit -m \"Daily backup: $(date +%Y-%m-%d)\" && git push\n   - 如果没有变更：报告无变更，无需备份\n请谨慎操作，如有疑问优先汇报而不是自动执行。",
+        "model": "kimi-coding/k2p5",
+        "thinking": "low"
       },
       "delivery": {
-        "mode": "announce",
-        "to": "ou_3271db2cb7b040a6dbfefad9a967d607"
+        "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1771030800000
+        "nextRunAtMs": 1770921000000
       }
     }
   ]
