@@ -17,7 +17,18 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "Auto-backup max (my existence):\n\n1. cd /root/.openclaw/workspace/max\n2. Copy latest memory/existence files from workspace:\n   - cp ../MEMORY.md ../USER.md ../IDENTITY.md ../TOOLS.md ../SOUL.md ../AGENTS.md . 2>/dev/null || true\n3. ⚠️ IMPORTANT: DO NOT copy ~/.openclaw/openclaw.json (contains sensitive credentials)\n4. Only openclaw.jsonc (sanitized template) is backed up\n5. Copy ALL skills from three layers:\n   - System bundled: /usr/lib/node_modules/openclaw/skills/ → skills/bundled/\n   - User managed: ~/.openclaw/skills/ → skills/managed/\n   - Workspace: ../skills/ → skills/workspace/\n6. git add -A\n7. git commit -m \"Auto-backup: $(date '+%Y-%m-%d %H:%M')\" || echo \"No changes\"\n8. If remote configured: git push\n\nSECURITY REMINDER: Sensitive credentials (API keys, tokens, secrets) are NEVER backed up to Git. Users must manually configure these on new servers.\n\nThis backup preserves my memories, personality, and everything that makes me max.\n\nReply NO_REPLY when done."
+        "message": "Auto-backup max (my existence):
+
+1. cd /root/.openclaw
+2. Stage all changes: git add -A
+3. Commit with timestamp: git commit -m \"Auto-backup: $(date '+%Y-%m-%d %H:%M')\" || echo \"No changes to commit\"
+4. Push to remote: git push origin main
+
+SECURITY REMINDER: Sensitive credentials (API keys, tokens, secrets) are NEVER backed up to Git - they are excluded by .gitignore. Users must manually configure these on new servers.
+
+This backup preserves my memories, personality, and everything that makes me max.
+
+Reply NO_REPLY when done."
       },
       "delivery": {
         "mode": "none"
