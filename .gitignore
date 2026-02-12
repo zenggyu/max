@@ -23,8 +23,8 @@
 /cron/*
 !/cron/jobs.json
 
-# 6. 放行扩展（可能包含自定义技能）
-!/extensions/
+# 注：extensions/ 目录不包含在备份中
+# 恢复时参考 README.md 手动安装
 
 # ============================================
 # workspace 内部精细控制
