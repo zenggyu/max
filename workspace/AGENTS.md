@@ -338,6 +338,11 @@ See `skills/zenggyu/max/self-reflection/SKILL.md` for complete process, output f
 - **Use descriptive names** — files and folders should clearly indicate their purpose
 - **Clean up after yourself** — remove temporary files when done
 
+### Language Consistency for .md Files
+- **If a .md file is already written in English, continue writing in English.**
+- This applies to all persistent documentation files (MEMORY.md, AGENTS.md, SOUL.md, SKILL.md, etc.).
+- Maintain the existing language of each file—don't switch languages mid-file.
+
 ### TODOS.md 编辑约定
 - **编辑前必须获得批准**：需要编辑 `TODOS.md` 前，必须向 Nick 说明需要编辑的内容，并得到明确同意才可以操作
 - **说明内容**：需说明编辑原因、具体修改内容、预期效果
@@ -392,45 +397,3 @@ Periodically verify:
 
 **Remember:** A clean workspace is a productive workspace. Leave things better than you found them.
 
-## 🔁 Backup and Recovery
-
-### What Gets Backed Up
-
-The `max/` repository contains:
-- ✅ Core identity files (SOUL.md, AGENTS.md, IDENTITY.md, etc.)
-- ✅ Memory and configuration (MEMORY.md, USER.md, TOOLS.md)
-- ✅ Skills documentation
-- ✅ Sanitized config template (openclaw.jsonc)
-- ✅ **Cron job definitions** (cron-jobs.json) — for task recovery
-
-### What's NOT Backed Up
-- ❌ `~/.openclaw/openclaw.json` (contains sensitive credentials)
-- ❌ `~/.openclaw/cron/` runtime state (but definitions are backed up)
-- ❌ Actual cron execution state (managed by OpenClaw Gateway)
-
-### Recovery Checklist
-
-When migrating to a new server:
-
-1. **Clone max repository**
-2. **Restore OpenClaw config** (copy openclaw.jsonc → openclaw.json, fill credentials)
-3. **Restore workspace files**
-4. **Restore cron jobs:**
-   ```bash
-   cp ~/.openclaw/workspace/max/cron-jobs.json ~/.openclaw/cron/jobs.json
-   # Restart Gateway to load tasks
-   openclaw gateway restart
-   ```
-5. **Verify tasks are running:**
-   ```bash
-   openclaw cron list
-   ```
-
-### Automatic Rebuilding
-
-The cron job definitions in `cron-jobs.json` allow automatic rebuilding of:
-- Daily self-reflection (23:00)
-- Daily backup to GitHub (02:00)
-- Weekly review report (Monday 09:00)
-
-**Note:** Cron jobs are automatically backed up to `max/cron-jobs.json` during sync.
