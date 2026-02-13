@@ -36,6 +36,7 @@
 # workspace 子目录
 # /workspace/memory/ 被忽略（运行时生成的记忆文件）
 !/workspace/skills/
+!/workspace/skills/**/*
 # /workspace/data/ 被忽略（包含独立 Git 仓库的项目）
 !/workspace/max/           # 已删除原目录
 

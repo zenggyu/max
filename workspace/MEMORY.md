@@ -42,6 +42,13 @@
 ## Project History
 - **IoT Customer Insight System (2026-02-10):** Requirements specification document. Collaborated with Nick to refine modules.
 
+## GitHub Repositories
+
+| Repository | Description | URL |
+|------------|-------------|-----|
+| zenggyu/max | Max existence backup & meta discussions | https://github.com/zenggyu/max |
+| zenggyu/ai-customer-insight | IoT Customer Insight System project | https://github.com/zenggyu/ai-customer-insight |
+
 ## Self-Reflection Framework (2026-02-13)
 
 ### Six Excellence Goals
@@ -63,3 +70,4 @@ Based on the vision collaboration framework, the following six excellence goals 
 - Analyze root causes for identified gaps
 - Propose improvements as initiatives (pending Nick's approval)
 - Output actionable recommendations (skills, SOUL.md/AGENTS.md/MEMORY.md updates)
+- **Bilateral Evaluation:** Evaluation metrics must distinguish between AI (Max) performance and Nick's performance. The Tony Stark ↔ Jarvis vision requires mutual effort, so both parties' contributions should be separately assessed. Additionally, third-party or uncontrollable factors should be documented to clarify boundaries, though they don't require dedicated evaluation or optimization methods.
