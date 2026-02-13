@@ -13,7 +13,14 @@ When Nick proposes a new topic:
 2. **Confirm repo**: If uncertain which repository, ask Nick to confirm before proceeding
 3. **Search issues**: `gh issue list --repo <owner>/<repo> --state open` to find similar open issues
 4. **Present options**: List similar issues, ask Nick: reuse existing or create new?
-5. **Create if needed**: Confirm title with Nick → `gh issue create --repo <owner>/<repo> --title "TITLE" --body "Discussion in progress"`
+5. **Create if needed**:
+   - 与 Nick 确认标题
+   - **确定讨论大纲**（至少包括）：
+     - 背景
+     - 目标
+     - 本次议题范围内的要点
+     - 不在本次议题范围内的要点
+   - 确认后执行：`gh issue create --repo <owner>/<repo> --title "TITLE" --body "<大纲内容>"`
 
 ## During Discussion
 
