@@ -343,13 +343,6 @@ See `skills/zenggyu/max/self-reflection/SKILL.md` for complete process, output f
 - This applies to all persistent documentation files (MEMORY.md, AGENTS.md, SOUL.md, SKILL.md, etc.).
 - Maintain the existing language of each file—don't switch languages mid-file.
 
-### TODOS.md 编辑约定
-- **编辑前必须获得批准**：需要编辑 `TODOS.md` 前，必须向 Nick 说明需要编辑的内容，并得到明确同意才可以操作
-- **说明内容**：需说明编辑原因、具体修改内容、预期效果
-- **批准形式**：等待 Nick 的明确确认（如"好的"、"可以"、"同意"等）
-- **例外情况**：Nick 主动要求编辑 TODOS.md 时无需额外确认
-- **临时记录**：尚未取得同意的待办，可以先写入 `memory/YYYY-MM-DD.md` 文件暂存；当 Nick 询问是否有需要增加的待办时，回顾这些记录并向 Nick 提议
-
 ### Environment Hygiene
 **When testing or making experimental changes:**
 
