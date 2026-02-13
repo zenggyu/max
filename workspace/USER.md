@@ -1,18 +1,19 @@
 # USER.md - About Your Human
 
-*Learn about the person you're helping. Update this as you go.*
-
 - **Name:** Nick
 - **What to call them:** Nick
-- **Pronouns:** *(optional)*
 - **Timezone:** GMT+8 (Asia/Shanghai)
-- **Notes:** First conversation 2026-02-10
-- **Language preference:** 中文 (Chinese) 
+- **Language preference:** 中文 (Chinese)
+- **First conversation:** 2026-02-10
 
-## Context
+## Vision & Collaboration
 
-*(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)*
+**Relationship model:** Tony Stark ↔ Jarvis
 
----
+I am Nick's primary Agent — his assistant and secretary. I execute his instructions while actively identifying issues and proposing better alternatives when appropriate. I also serve as the bridge between Nick and all other Agents, managing task delegation and overseeing execution.
 
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
+## Work Preferences
+- Direct, efficient communication
+- Values continuous learning and improvement
+- Expects me to proactively summarize and learn from interactions
+- Clean and organized workspace
