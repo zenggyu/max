@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://docs.astral.sh/uv/getting-started/installation/
+- Configuration guide: 
 - Troubleshooting: https://docs.astral.sh/uv/
 
 ## User Preferences
