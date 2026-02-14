@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://docs.openclaw.ai/getting-started/installation
+- Configuration guide: 
 - Troubleshooting: https://docs.openclaw.ai/
 
 ## User Preferences
