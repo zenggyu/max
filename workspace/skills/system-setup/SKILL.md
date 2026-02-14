@@ -12,6 +12,8 @@ Principle-driven system software installation and configuration.
 - **SKILL.md** — General principles, workflow, log format. Read first for all installations.
 - **references/<name>.md** — Per-software: official URL, user preferences, verification criteria, post-install config. Read before installing each software.
 
+**Priority:** software.md > SKILL.md > agent reasoning
+
 ## Workflow
 
 1. **Receive request** — User requests software installation.
@@ -146,6 +148,7 @@ For each software to install, read its reference file in `references/<name>.md`.
 
 ## Official Documentation
 - Installation guide: <URL>
+- Configuration guide: <URL>
 - Troubleshooting: <URL> (optional)
 
 ## User Preferences
