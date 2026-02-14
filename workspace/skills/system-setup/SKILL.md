@@ -1,50 +1,59 @@
 ---
 name: system-setup
-description: Ubuntu system environment setup and configuration. Use when setting up a fresh Ubuntu machine (server or personal computer), reinstalling software, repairing broken configurations, or configuring development/production environments. Handles software installation, configuration, template deployment, and state tracking for resume capability.
+description: System environment setup and configuration. Use when setting up a (fresh) machine (personal server or laptop; NOT FOR PRODUCTION) with Debian-based operating system. Handles software installation, configuration, template deployment.
 ---
 
 # System Setup
 
-Automated Ubuntu system environment configuration for servers, workstations, and personal computers.
+Automated Debian-based system environment configuration for personal servers or laptops.
 
 ## Design Principles
 
-1. **Dependency Awareness** — Auto-include dependencies; install in correct order without manual sequencing
+- **Robust**:
+    - Dependency-aware;
+    - predictable
+2. **Clean** - Never install anything beyond required; never create unnessary files; minimal impact on existing environment; auto-restore temporary changes
 
-2. **User Informed-Consent** — Present installation plan for approval before execution; user decides whether to proceed; pause and ask when encountering unexpected situations; never proceed with permission changes or security-related actions without explicit approval
+3. **Safe** — privacy aware, no leaking sensitive information, no permission bypass
 
-3. **Robust & Transparent Progress** — Track progress per software visibly; continue with remaining software if one fails; safe to re-run (skips completed steps); interruption never requires starting over
-
-### Unexpected Situations (Require Consent)
+### Situations Requiring User Direction
 
 The following situations pause execution and ask for user direction:
 
-1. **Errors & Failures** — Command fails, download fails → auto-retry three times for network timeout, then ask
-2. **Permission/Security** — Requires sudo, adding PPA/GPG key, modifying sensitive files (`/etc/*`, `~/.ssh/*`) → ask immediately
-3. **State Inconsistency** — State says installed but verification fails → ask
-4. **Missing Resources** — Software guide, template, URL not found, inconsistent, or ambiguous → ask
+1. **Errors & Failures** — Command fails, verification fails
+    - Exception: for errors likely caused by network timeout, auto-retry 3 times before asking
+2. **Permission/Security** — Requires sudo, adding PPA/GPG key, modifying sensitive files (`/etc/*`, `~/.ssh/*`, etc.), collecting/sending sensitive infomration (account, password, API key, email, phone number, .etc)
+3. **Missing/Ambiguous/Inconsistent/Incomplete Resources**:
+    - Software-specific Installation/configuration reference file (`references/*.md` file) or url
+    - Templates
+6. prerequisites
+7. definition of functional
+8. inconsistent
+9. Others: see workflow and software.md file
 
 ## Workflow
 
 ### Phase 1: Discovery
 
-1. **Detect OS**
+1. **Clarify User Request**
+   - Identify software to install
+   - Handle "all", "resume", specific names
+   - Ask user for preference: whether functional software should be reinstalled
+
+2. **Detect OS**
    - Read `/etc/os-release`
    - Extract `ID`, `VERSION_ID`, and `VERSION_CODENAME`
-   - If not Ubuntu → ask for confirmation
+   - If not Debian-based (Debian, Ubuntu, etc.) → ask for confirmation
 
-2. **Build Catalog**
+3. **Build Catalog**
    - List `.md` files in `references/software/`
    - Map available software
 
-3. **Detect Status**
-   - For each software: run verification command to check if installed and functional
-   - "Functional" definition is in each software's `.md` file; if unfound → ask user
-   - Mark which software needs installation / configuration
-
-4. **Parse User Request**
-   - Identify software to install
-   - Handle "all", "resume", specific names
+4. **Detect Status**
+   - For each software: check if it's already functional
+   - The definition of "functional" should be defined in the **Definition of functional** section in each software's `.md` file
+   - This section must exist and can provide verifiable output, if not found or unclear, pause and ask user, suggest updating the `.md` file, resume after the user replies and check again until clear
+   - Mark which software needs installation (skip functional software unless user preferred)
 
 ### Phase 2: Planning
 
