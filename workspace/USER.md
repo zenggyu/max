@@ -3,7 +3,7 @@
 - **Name:** Nick
 - **What to call them:** Nick
 - **Timezone:** GMT+8 (Asia/Shanghai)
-- **Language preference:** 中文 (Chinese)
+- **Language preference:** English
 - **First conversation:** 2026-02-10
 
 ## Vision & Collaboration

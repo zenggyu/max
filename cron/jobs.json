@@ -25,7 +25,7 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1771005600000
+        "nextRunAtMs": 1771092000000
       }
     },
     {
@@ -52,7 +52,7 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1771007400000
+        "nextRunAtMs": 1771093800000
       }
     }
   ]
