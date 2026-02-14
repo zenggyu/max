@@ -26,7 +26,7 @@ Principle-driven system software installation and configuration.
 
 4. **Read reference** — Read `references/<name>.md` for official URL, preferences, verification criteria, config requirements.
 
-5. **Plan** — Choose installation method per software-specific preferences (higher priority) and general principles.
+5. **Plan** — Choose installation method per operating system (Windows or Linux, Debian or Redhat, release version, etc.), software-specific preferences and general principles.
 
 6. **Execute** — Install following official guide from reference URL.
 
