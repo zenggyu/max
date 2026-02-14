@@ -137,9 +137,26 @@ Repeat steps 4-9 for each software. Clean up temporary changes when all done.
 
 ## Software-Specific Preferences
 
-For each software to install, read its reference file in `references/software/<name>.md`. These files contain:
-- Official URL(s) for: installation/trouble shooting guide
-- User's preferences (which take precedence over general principles above)
-- Post-installation configuration requirements
+For each software to install, read its reference file in `references/software/<name>.md`.
 
-**Preference Priority:** Software .md file > SKILL.md principles > agent reasoning
+**Template for each `references/software/<name>.md`:**
+
+```markdown
+# <Software Name>
+
+## Official Documentation
+- Installation guide: <URL>
+- Troubleshooting: <URL> (optional)
+
+## User Preferences
+- Installation method preference: <e.g., uv over pip, nvm over apt>
+- Version preference: <e.g., latest stable, specific version>
+- Other preferences: <any specific choices>
+
+## Definition of Functional
+<Verifiable criteria, e.g., "Running `<command>` returns exit code 0 and outputs version">
+
+## Post-Installation Configuration
+- <Configuration item 1>
+- <Configuration item 2>
+```
