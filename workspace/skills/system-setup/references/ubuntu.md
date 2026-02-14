@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: N/A (OS is the base, not installed)
+- Configuration guide: 
 - Troubleshooting: https://help.ubuntu.com/
 
 ## User Preferences
