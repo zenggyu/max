@@ -7,14 +7,14 @@
       "name": "Daily Self-Reflection",
       "enabled": true,
       "createdAtMs": 1770890626532,
-      "updatedAtMs": 1770890626532,
+      "updatedAtMs": 1771064408281,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
+      "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
         "message": "执行每日自我反省。请读取 skills/zenggyu/max/self-reflection/SKILL.md，然后生成前一天的反思报告并保存到 memory/YYYY-MM-DD-reflection.md",
