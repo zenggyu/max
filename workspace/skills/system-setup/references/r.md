@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://cran.r-project.org/bin/linux/ubuntu/
+- Configuration guide: 
 - Troubleshooting: https://cran.r-project.org/manuals.html
 
 ## User Preferences
