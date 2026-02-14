@@ -9,7 +9,7 @@ Principle-driven system software installation and configuration.
 
 ## Core Principles
 
-1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and consult their official documentation before installing.
+1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and follow official installation guide.
 
    **Priority:** URL in software's .md file > general official documentation
    
@@ -19,11 +19,13 @@ Principle-driven system software installation and configuration.
    - Official package repositories (vendor apt repos, Microsoft Store)
    - Official install scripts on vendor's verified domains
    - Official language registries (npmjs.com, pypi.org, crates.io)
+   - Pause and ask user after official troubleshooting guide does not help
    
    **BAD:**
    - Random GitHub repos not owned by the vendor
    - Third-party PPAs without vendor endorsement
    - Unverified "mirror" sites
+   - Search for solutions from random sources online when installation or verification fails
 
 2. **Prefer Simplicity** — Choose options that are isolated, stable, and have minimal dependencies.
 
@@ -107,8 +109,8 @@ Principle-driven system software installation and configuration.
 ## Software-Specific Preferences
 
 For each software to install, read its reference file in `references/software/<name>.md`. These files contain:
-- Official documentation URL(s)
-- Nick's preferences (which take precedence over general principles above)
+- Official URL(s) for: installation/trouble shooting guide
+- User's preferences (which take precedence over general principles above)
 - Post-installation configuration requirements
 
 **Preference Priority:** Software .md file > SKILL.md principles > agent reasoning
