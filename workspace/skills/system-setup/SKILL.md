@@ -10,7 +10,7 @@ Principle-driven system software installation and configuration.
 ## Structure
 
 - **SKILL.md** — General principles, workflow, log format. Read first for all installations.
-- **references/software/<name>.md** — Per-software: official URL, user preferences, verification criteria, post-install config. Read before installing each software.
+- **references/<name>.md** — Per-software: official URL, user preferences, verification criteria, post-install config. Read before installing each software.
 
 ## Workflow
 
@@ -19,10 +19,10 @@ Principle-driven system software installation and configuration.
 2. **Clarify scope** — If unclear which software to install, ask user to clarify.
 
 3. **Check availability** — For each requested software:
-   - If not in `references/software/*.md`, skip and inform user.
+   - If not in `references/*.md`, skip and inform user.
    - If available, proceed.
 
-4. **Read reference** — Read `references/software/<name>.md` for official URL, preferences, verification criteria, config requirements.
+4. **Read reference** — Read `references/<name>.md` for official URL, preferences, verification criteria, config requirements.
 
 5. **Plan** — Choose installation method per software-specific preferences (higher priority) and general principles.
 
@@ -137,9 +137,9 @@ Repeat steps 4-9 for each software. Clean up temporary changes when all done.
 
 ## Software-Specific Preferences
 
-For each software to install, read its reference file in `references/software/<name>.md`.
+For each software to install, read its reference file in `references/<name>.md`.
 
-**Template for each `references/software/<name>.md`:**
+**Template for each `references/<name>.md`:**
 
 ```markdown
 # <Software Name>
