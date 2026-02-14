@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://git-scm.com/download/linux
+- Configuration guide: 
 - Troubleshooting: https://git-scm.com/doc
 
 ## User Preferences
