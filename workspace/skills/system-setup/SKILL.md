@@ -1,132 +1,122 @@
 ---
 name: system-setup
-description: Ubuntu system environment setup and configuration. Use when setting up a fresh Ubuntu machine (server or personal computer), reinstalling software, repairing broken configurations, or configuring development/production environments. Handles software installation, configuration, template deployment, and state tracking for resume capability.
+description: System environment setup and software installation for Linux and Windows. Use when user explicitly requests system setup, software installation, environment configuration, or configuration repair.
 ---
 
 # System Setup
 
-Automated Ubuntu system environment configuration for servers, workstations, and personal computers.
+Principle-driven system software installation and configuration.
 
-## Design Principles
+## Core Principles
 
-1. **Dependency Awareness** — Auto-include dependencies; install in correct order without manual sequencing
+1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and consult their official documentation before installing.
 
-2. **User Informed-Consent** — Present installation plan for approval before execution; user decides whether to proceed; pause and ask when encountering unexpected situations; never proceed with permission changes or security-related actions without explicit approval
+   **Priority:** URL in software's .md file > general official documentation
+   
+   **GOOD:**
+   - URL specified in software's .md file (highest priority)
+   - Official vendor websites (nodejs.org, docker.com)
+   - Official package repositories (vendor apt repos, Microsoft Store)
+   - Official install scripts on vendor's verified domains
+   - Official language registries (npmjs.com, pypi.org, crates.io)
+   
+   **BAD:**
+   - Random GitHub repos not owned by the vendor
+   - Third-party PPAs without vendor endorsement
+   - Unverified "mirror" sites
 
-3. **Robust & Transparent Progress** — Track progress per software visibly; continue with remaining software if one fails; safe to re-run (skips completed steps); interruption never requires starting over
+2. **Prefer Simplicity** — Choose options that are isolated, stable, and have minimal dependencies.
 
-### Unexpected Situations (Require Consent)
+   **GOOD:**
+   - User-space installs: uv/venv for Python, nvm for Node.js, Scoop/Chocolatey on Windows
+   - Installing binaries to `~/.local/bin` instead of `/usr/local/bin`
+   - Storing configs in `~/.config/` instead of `/etc/`
+   - Using apt on Ubuntu (included by default) over Homebrew (requires additional installation)
+   - Latest stable version over old stable or unstable
+   - Asking before privilege escalation (except `apt update/install`, system-wide services)
+   
+   **BAD:**
+   - Using pip for system Python (poor dependency management, conflicts likely)
+   - Adding new package managers when existing ones suffice
+   - Installing global npm packages with sudo
+   - Windows MSI installers requiring admin when user-space alternatives exist
 
-The following situations pause execution and ask for user direction:
+3. **Trackable** — Maintain a single log file with complete records for all software installed.
 
-1. **Errors & Failures** — Command fails, download fails → auto-retry three times for network timeout, then ask
-2. **Permission/Security** — Requires sudo, adding PPA/GPG key, modifying sensitive files (`/etc/*`, `~/.ssh/*`) → ask immediately
-3. **State Inconsistency** — State says installed but verification fails → ask
-4. **Missing Resources** — Software guide, template, URL not found, inconsistent, or ambiguous → ask
+   **Log location:** 
+   - Linux: `/tmp/system-setup-<random>.log`
+   - Windows: `%TEMP%\system-setup-<random>.log`
+   
+   Always inform user of the log file path.
+   
+   **Log template (repeat for each software):**
+   
+   | Field | Description |
+   |-------|-------------|
+   | SOFTWARE | Name of the software installed |
+   | START_TIME | When installation began (YYYY-MM-DD HH:MM:SS) |
+   | END_TIME | When installation completed (YYYY-MM-DD HH:MM:SS) |
+   | SOURCE | URL used; explain if multiple options were available |
+   | VERSION | Version installed; explain if multiple versions were available |
+   | ACTION | Commands/method used; explain if multiple methods were available |
+   | CONFIG | Configuration changes made post-install |
+   | TEMP | Temporary changes; explain if any remain unreverted |
+   | VERIFY | How functionality was verified; explain if FAILED |
+   | RESULT | SUCCESS / FAILED / PARTIAL; explain if not SUCCESS |
+   
+   **Example:**
+   ```
+   SOFTWARE: uv
+   START_TIME: 2024-02-14 15:30:00
+   END_TIME: 2024-02-14 15:31:45
+   SOURCE: https://docs.astral.sh/uv/getting-started/installation/ (official, recommended)
+   VERSION: 0.5.24 (latest stable)
+   ACTION: curl -LsSf https://astral.sh/uv/install.sh | sh (official install script)
+   CONFIG: Added to PATH via ~/.bashrc
+   TEMP: None
+   VERIFY: uv --version returned 0.5.24
+   RESULT: SUCCESS
+   ```
 
-## Workflow
+4. **Be Clean** — Keep persistent changes minimal. Revert temporary changes.
 
-### Phase 1: Discovery
+   **GOOD:**
+   - Only installing what was requested
+   - Creating temporary test files in `/tmp/` that auto-clean
+   - Reverting test configurations after verification
+   - Documenting any unrevertable changes in the log
+   
+   **BAD:**
+   - Installing "recommended" extras without asking
+   - Leaving test databases or config files behind
+   - Modifying system configs for temporary tests without reverting
+   - Not documenting changes that couldn't be undone
 
-1. **Detect OS**
-   - Read `/etc/os-release`
-   - Extract `ID`, `VERSION_ID`, and `VERSION_CODENAME`
-   - If not Ubuntu → ask for confirmation
+5. **Verify Functionality** — Confirm the software works correctly.
 
-2. **Build Catalog**
-   - List `.md` files in `references/software/`
-   - Map available software
+   Each software's reference .md file defines what "functional" means for that software. The definition must be verifiable (e.g., a command that returns a non-error exit status).
 
-3. **Detect Status**
-   - For each software: run verification command to check if installed and functional
-   - "Functional" definition is in each software's `.md` file; if unfound → ask user
-   - Mark which software needs installation / configuration
+6. **When Uncertain, Ask** — Pause and request user direction when:
+   - In doubt about the correct approach
+   - Principles conflict with each other
+   - Software guide is ambiguous or incomplete
+   - Multiple valid options with no clear preference
+   - About to make irreversible changes
+   - Verification fails and resolution is unclear
 
-4. **Parse User Request**
-   - Identify software to install
-   - Handle "all", "resume", specific names
+## Software-Specific Preferences
 
-### Phase 2: Planning
+For each software to install, read its reference file in `references/software/<name>.md`. These files contain:
+- Official documentation URL(s)
+- Nick's preferences (which take precedence over general principles above)
+- Post-installation configuration requirements
 
-1. **Collect Prerequisites**
-   - Extract from **Prerequisites** section in `.md` files for all software marked for installation
-   - This section must exist (even if empty: "Prerequisites: none")
-   - If prerequisites not exist or ambiguous → pause and ask user, suggest updating the `.md` file, resume after the user replies and check again until clear
-   - Distinguish which prerequisite can be handled without the user (installing or downloading dependencies with apt, npm, uv, uvx, curl, R INSTALL, etc.) and mark those to be executed (when in doubt, pause and ask)
-   - Report other prerequisites to user; pause until confirmed ready
+**Preference Priority:** Software .md file > SKILL.md principles > agent reasoning
 
-2. **Determine Install Order**
-   - Topological sort based on prerequisites to be executed
-   - Software with no prerequisites first
-   - Dependents after their prerequisites
-   - When in doubt, pause and ask user
+## When to Ask
 
-3. **Report Plan**
-   - Show ordered list: "Will install: A → B → C"
-   - Note any skipped (already installed)
-
-### Read State
-```bash
-STATE_FILE="/var/tmp/server-setup-state.json"
-if [ -f "$STATE_FILE" ]; then
-    STATE=$(cat "$STATE_FILE")
-else
-    STATE='{}'
-fi
-```
-
-### Update State
-```bash
-# Update specific software status
-echo "$STATE" | jq '.software.docker = {"installed": true, "configured": true}' > "$STATE_FILE"
-```
-
-### Reset State
-```bash
-rm -f /var/tmp/server-setup-state.json
-```
-
-## Reference Files
-
-### OS Guides
-- `references/os/ubuntu.md` — Ubuntu preparation and system updates
-
-### Software Guides
-Located in `references/software/`, one file per software:
-- `docker.md` — Docker installation and configuration
-- `git.md` — Git installation and configuration
-- `nodejs.md` — Node.js installation and configuration
-- `nginx.md` — Nginx installation and configuration
-- etc.
-
-Each software guide follows this structure:
-```markdown
-# Software Name
-
-## Installation
-Commands to install the software.
-
-## Configuration
-Commands to configure the software.
-
-## Verification
-Commands to verify installation.
-
-## Notes
-Any special considerations or troubleshooting.
-```
-
-### Templates
-Located in `references/templates/`:
-- `bashrc.template` — Shell configuration
-- `gitconfig.template` — Git configuration
-- `vimrc.template` — Vim configuration
-- etc.
-
-## Troubleshooting
-
-**Permission denied:** If state file cannot be written to `/var/tmp/`, fall back to current directory.
-
-**Software not found:** Check if the software `.md` file exists in `references/software/`.
-
-**Partial failure:** State file tracks individual software status; resume from failed software.
+Ask for direction when:
+- Multiple valid installation paths exist and software reference doesn't specify
+- Uncertain whether a source is "official" or trustworthy
+- Post-installation configuration requirements are unclear
+- Any situation where proceeding without clarification could lead to unwanted outcomes
