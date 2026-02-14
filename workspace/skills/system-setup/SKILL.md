@@ -112,11 +112,3 @@ For each software to install, read its reference file in `references/software/<n
 - Post-installation configuration requirements
 
 **Preference Priority:** Software .md file > SKILL.md principles > agent reasoning
-
-## When to Ask
-
-Ask for direction when:
-- Multiple valid installation paths exist and software reference doesn't specify
-- Uncertain whether a source is "official" or trustworthy
-- Post-installation configuration requirements are unclear
-- Any situation where proceeding without clarification could lead to unwanted outcomes
