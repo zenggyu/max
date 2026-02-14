@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://github.com/posit-dev/positron/releases
+- Configuration guide: 
 - Troubleshooting: https://github.com/posit-dev/positron/issues
 
 ## User Preferences
