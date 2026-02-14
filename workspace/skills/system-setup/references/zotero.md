@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://www.zotero.org/support/installation
+- Configuration guide: 
 - Troubleshooting: https://www.zotero.org/support/
 
 ## User Preferences
