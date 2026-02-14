@@ -7,7 +7,7 @@ description: System environment setup and configuration. Use when setting up a (
 
 Automated Debian-based system environment configuration for personal servers or laptops.
 
-## Design Principles
+## Principles And Structure
 
 - **Robust**:
     - Dependency-aware;
