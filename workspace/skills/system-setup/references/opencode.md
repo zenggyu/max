@@ -4,6 +4,7 @@
 
 ## Official Documentation
 - Installation guide: https://github.com/opencode-ai/opencode/releases
+- Configuration guide: 
 - Troubleshooting: https://github.com/opencode-ai/opencode/issues
 
 ## User Preferences
