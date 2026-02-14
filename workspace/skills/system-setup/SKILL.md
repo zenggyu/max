@@ -7,9 +7,13 @@ description: System environment setup and software installation for Linux and Wi
 
 Principle-driven system software installation and configuration.
 
-## Core Principles
+## Structure
 
-1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and follow official installation guide.
+## Workflow
+
+## General Principles
+
+1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and follow official installation/troubleshooting guide.
 
    **Priority:** URL in software's .md file > general official documentation
    
@@ -25,7 +29,7 @@ Principle-driven system software installation and configuration.
    - Random GitHub repos not owned by the vendor
    - Third-party PPAs without vendor endorsement
    - Unverified "mirror" sites
-   - Search for solutions from random sources online when installation or verification fails
+   - Search for solutions from random sources online, or implement custom hacks when installation or verification fails
 
 2. **Prefer Simplicity** — Choose options that are isolated, stable, and have minimal dependencies.
 
