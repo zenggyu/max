@@ -1,5 +1,7 @@
 # Positron
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://github.com/posit-dev/positron/releases
 - Troubleshooting: https://github.com/posit-dev/positron/issues

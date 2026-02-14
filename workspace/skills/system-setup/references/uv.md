@@ -1,5 +1,7 @@
 # uv
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://docs.astral.sh/uv/getting-started/installation/
 - Troubleshooting: https://docs.astral.sh/uv/

@@ -1,5 +1,7 @@
 # Zotero
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://www.zotero.org/support/installation
 - Troubleshooting: https://www.zotero.org/support/

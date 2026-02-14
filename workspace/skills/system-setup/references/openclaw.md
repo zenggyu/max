@@ -1,5 +1,7 @@
 # OpenClaw
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://docs.openclaw.ai/getting-started/installation
 - Troubleshooting: https://docs.openclaw.ai/

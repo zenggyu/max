@@ -1,5 +1,7 @@
 # Ubuntu
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: N/A (OS is the base, not installed)
 - Troubleshooting: https://help.ubuntu.com/

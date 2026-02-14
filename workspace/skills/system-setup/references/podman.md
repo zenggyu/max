@@ -1,5 +1,7 @@
 # Podman
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://podman.io/docs/installation
 - Troubleshooting: https://podman.io/docs

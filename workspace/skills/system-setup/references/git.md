@@ -1,5 +1,7 @@
 # Git
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://git-scm.com/download/linux
 - Troubleshooting: https://git-scm.com/doc

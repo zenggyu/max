@@ -1,5 +1,7 @@
 # R
 
+> **WARNING**: This file is incomplete. All content is unverified and subject to change.
+
 ## Official Documentation
 - Installation guide: https://cran.r-project.org/bin/linux/ubuntu/
 - Troubleshooting: https://cran.r-project.org/manuals.html
