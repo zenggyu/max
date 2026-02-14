@@ -9,7 +9,8 @@ Principle-driven system software installation and configuration.
 
 ## Structure
 
-## Workflow
+- **SKILL.md** — General principles, workflow, log format. Read first for all installations.
+- **references/software/<name>.md** — Per-software: official URL, user preferences, verification criteria, post-install config. Read before installing each software.
 
 ## General Principles
 
