@@ -27,33 +27,6 @@
       "state": {
         "nextRunAtMs": 1771092000000
       }
-    },
-    {
-      "id": "22c253ad-5aff-42e0-9bfc-2432b8153e9f",
-      "agentId": "main",
-      "name": "Daily Backup to GitHub",
-      "enabled": true,
-      "createdAtMs": 1770890626552,
-      "updatedAtMs": 1770891191542,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行每日备份检查。步骤：\n1. cd /root/.openclaw && git status\n2. 检查结果：\n   - 如果有 untracked files（新文件）：中止备份，向我（Nick）汇报这些新文件列表，等待我的确认后再决定是否纳入备份或调整 .gitignore\n   - 如果只有已有文件的修改（modified）：执行 git add --update && git commit -m \"Daily backup: $(date +%Y-%m-%d)\" && git push\n   - 如果没有变更：报告无变更，无需备份\n请谨慎操作，如有疑问优先汇报而不是自动执行。",
-        "model": "kimi-coding/k2p5",
-        "thinking": "low"
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1771093800000
-      }
     }
   ]
 }
