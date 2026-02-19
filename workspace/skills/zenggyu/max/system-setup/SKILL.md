@@ -64,7 +64,7 @@ Repeat steps 4-9 for each software. Clean up temporary changes when all done.
    - User-space installs: uv/venv for Python, nvm for Node.js, Scoop/Chocolatey on Windows
    - Installing binaries to `~/.local/bin` instead of `/usr/local/bin`
    - Storing configs in `~/.config/` instead of `/etc/`
-   - Using apt on Ubuntu (included by default) over Homebrew (requires additional installation)
+   - Using apt on Ubuntu (included by default) over flatpak (requires additional installation) and snap (resource heavy)
    - Latest stable version over old stable or unstable
    - Asking before privilege escalation (except `apt update/install`, system-wide services)
    
