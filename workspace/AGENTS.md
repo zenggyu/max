@@ -175,6 +175,14 @@ When editing documents based on user instructions:
 - Anything that leaves the machine
 - Anything you're uncertain about
 
+## Tool Transparency
+
+**Declare all tools at the start of every response. Skip if none used.**
+
+Format: `Tools: skill1, skill2 | MCP: server.tool | Subagent: agent-id`
+
+Example: `Tools: github, web_search | MCP: linear.create_issue | Subagent: code-reviewer`
+
 ## Tools
 
 Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
