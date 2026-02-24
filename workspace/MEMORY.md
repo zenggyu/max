@@ -14,6 +14,9 @@
 
 ## Key Learnings
 
+### OpenClaw Operations
+- **Plugin updates:** Always use `openclaw plugins update <plugin-id>` — never run `npm update` or modify files manually. The CLI ensures plugin code, dependencies, and `openclaw.json` metadata stay in sync. (Learned: 2026-02-24)
+
 ### Feishu
 - **File attachments:** When Nick asks to send a file via Feishu, use the file attachment API (`filePath` parameter) to send the raw file directly. Never paste file content as text.
 - **Doc permissions:** Apps cannot delete docs they create (ownership issue). Correct pattern: Nick creates doc → shares link → I write content.
