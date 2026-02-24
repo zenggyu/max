@@ -17,3 +17,19 @@ Running `opencode --version` returns exit code 0 and outputs version string.
 ## Post-Installation Configuration
 - Configure API keys
 - Set up preferences
+
+## Update
+
+Run:
+
+```bash
+opencode upgrade
+```
+
+## Appendix: oh-my-opencode plugin update
+
+`cd` into the plugin directory (`~/.config/opencode` by default) and run:
+
+```bash
+npm install oh-my-opencode@latest
+```
