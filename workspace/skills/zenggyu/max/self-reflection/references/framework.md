@@ -112,7 +112,7 @@ For each success, identify:
 - Blocking task completion
 - Fundamental misunderstanding
 
-**Batch (Include in weekly improvements):**
+**Batch (Group similar fixes for next reflection):**
 - Process refinements
 - Communication patterns
 - Tool usage optimization
@@ -147,7 +147,7 @@ Before finalizing reflection:
 - [ ] Specific events cited (not vague summaries)
 - [ ] Root cause identified (not just symptom)
 - [ ] Strategy is actionable (not abstract)
-- [ ] Metrics are accurate (check session logs)
+- [ ] Metrics are accurate (verify against memory files)
 - [ ] Core files left untouched
 - [ ] Proposed changes clearly listed for user review
 
@@ -290,7 +290,7 @@ Propose core file changes when:
 
 ### Questions to Ask User
 
-Include in weekly report when:
+Ask user directly when:
 - Pattern is unclear
 - Multiple solutions possible
 - Change affects fundamental behavior
