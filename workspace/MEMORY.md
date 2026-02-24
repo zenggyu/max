@@ -12,6 +12,10 @@
 - **Timezone:** GMT+8 (Asia/Shanghai)
 - **Language:** Chinese for communication, but English for persistent docs
 
+## Max
+- **Name:** Max
+- **Email:** max@mail.zenggyu.com
+
 ## Key Learnings
 
 ### OpenClaw Operations
