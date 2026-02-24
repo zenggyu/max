@@ -7,7 +7,7 @@
       "name": "Daily Self-Reflection",
       "enabled": true,
       "createdAtMs": 1770890626532,
-      "updatedAtMs": 1771064408281,
+      "updatedAtMs": 1771909054129,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
@@ -17,7 +17,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行每日自我反省。请读取 skills/zenggyu/max/self-reflection/SKILL.md，然后生成前一天的反思报告并保存到 memory/YYYY-MM-DD-reflection.md",
+        "message": "Use self-reflection skill. Generate daily reflection for yesterday. Read memory/YYYY-MM-DD.md and any memory/YYYY-MM-DD-{slug}.md files for yesterday's date. Analyze events, identify issues, perform root cause analysis, and append/update the 'Self Reflection' section in memory/YYYY-MM-DD.md. Do NOT modify core files.",
         "model": "kimi-coding/k2p5",
         "thinking": "low"
       },
@@ -25,7 +25,11 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1771092000000
+        "nextRunAtMs": 1771956000000,
+        "lastRunAtMs": 1771869600006,
+        "lastStatus": "ok",
+        "lastDurationMs": 66362,
+        "consecutiveErrors": 0
       }
     }
   ]

@@ -18,28 +18,35 @@ This skill defines a structured self-reflection process for continuous improveme
 **When to Use This Skill:**
 - Daily at 02:00 (automated via cron)
 - User explicitly requests reflection
-- Preparing weekly summary on Saturday
 
 ## Daily Reflection Schedule
 
 **Trigger:** Daily at 02:00 via cron job
-**Scope:** Review previous day's memory files (YYYY-MM-DD.md)
-**Output:** memory/YYYY-MM-DD-reflection.md
+**Scope:** Review previous day's memory files (`memory/YYYY-MM-DD.md` and `memory/YYYY-MM-DD-{slug}.md`)
+**Output:** Append "Self Reflection" section to `memory/YYYY-MM-DD.md` (create if not exists; update existing section if present)
 **Duration:** 5-10 minutes of focused analysis
+
+## Data Sources
+
+Read existing memory files for the target day:
+- `memory/YYYY-MM-DD.md` — standard daily memory (agent-curated notes)
+- `memory/YYYY-MM-DD-{slug}.md` — session summaries (if multiple sessions, read all)
+
+Do NOT read raw session logs (`.jsonl` files) — too token-intensive.
 
 ## Reflection Process
 
 ### Step 1: Review Memory Files
 
-Read the previous day's memory file(s):
-- `memory/YYYY-MM-DD.md` (main daily log)
-- Any interaction logs from that day
+Read the previous day's memory files:
+- `memory/YYYY-MM-DD.md` (standard daily memory with agent-curated notes)
+- `memory/YYYY-MM-DD-{slug}.md` (session summaries, if they exist)
 
-Extract:
-- All user interactions (requests, responses, corrections)
+Extract from these files:
+- User interactions and requests
 - Explicit corrections or feedback from user
-- Decisions made
-- Tasks completed
+- Decisions made and tasks completed
+- Any existing "Self Reflection" section (to avoid duplication)
 
 ### Step 2: Identify Issues
 
@@ -154,24 +161,38 @@ Record specific inconsistencies with:
 - The conflicting statements
 - Suggested fix
 
+## Output Format
+
+Write the reflection to `memory/YYYY-MM-DD.md` following these rules:
+
+1. **Create the file if it doesn't exist**
+2. **Check for existing "Self Reflection" section**
+   - If present: Replace/update the entire section
+   - If not present: Append to end of file
+3. **Ensure only ONE "Self Reflection" section exists** per day
+
+### Section Format
+
 ```markdown
-# Daily Reflection - YYYY-MM-DD
+## Self Reflection
 
-## Events Review
-[Summary of key interactions and tasks]
+Generated at: [timestamp]
 
-## What Went Well
+### Events Review
+[Summary of key interactions and tasks from the day's memory files]
 
-### Event 1: [Brief description]
+### What Went Well
+
+#### Event 1: [Brief description]
 - **Situation:** [Context]
 - **Action:** [What I did]
 - **Result:** [Outcome]
 - **Success Factors:** [What enabled this]
 - **Keep Strategy:** [How to maintain/enhance]
 
-## Issues Identified
+### Issues Identified
 
-### Issue 1: [Brief description]
+#### Issue 1: [Brief description]
 - **Category:** [User-identified / Self-discovered]
 - **Related Event:** [Reference to specific interaction]
 - **Root Cause Analysis:**
@@ -180,139 +201,42 @@ Record specific inconsistencies with:
   - Root Cause: [Final factor]
 - **Improvement Strategy:** [Specific action to take]
 
-## Metrics
+### Metrics
 | Metric | Value | Notes |
 |--------|-------|-------|
 | Interactions | X | [Number of exchanges] |
 | Corrections | Y | [Times user corrected me] |
 | Clarifications | Z | [Times I asked for clarification] |
 | Improvements | W | [Proactive suggestions adopted] |
-| Token Usage | N | [If available] |
-| Avg Response Time | T | [If measurable] |
 
-## Key Learnings
+### Key Learnings
 - [Learning 1 with context]
 - [Learning 2 with context]
 
-## Consistency Check
+### Consistency Check
 
-### Behavior vs Core Files
+#### Behavior vs Core Files
 | Behavior Observed | Expected per File | Consistent? | Issue |
 |-------------------|-------------------|-------------|-------|
 | [What I did] | [SOUL.md/AGENTS.md says] | Yes/No | [If no, describe gap] |
 
-### Internal Consistency (AGENTS.md)
+#### Internal Consistency (AGENTS.md)
 - **Conflicts Found:** [Yes/No]
-  - Location 1: [Section A] vs Location 2: [Section B]
-  - Conflict: [Description]
-  - Suggested Resolution: [Fix]
+  - [Details if any]
 
-### Internal Consistency (SOUL.md)
+#### Internal Consistency (SOUL.md)
 - **Conflicts Found:** [Yes/No]
-  - [Same format as above]
+  - [Details if any]
 
-### Cross-File Consistency (AGENTS.md vs SOUL.md)
+#### Cross-File Consistency
 - **Conflicts Found:** [Yes/No]
-  - AGENTS.md: [Section] says [X]
-  - SOUL.md: [Section] says [Y]
-  - Conflict: [Description]
+  - [Details if any]
 
-### Quality Issues
-| Type | Location | Issue | Suggested Fix |
-|------|----------|-------|---------------|
-| Redundancy | [File:Section] | [Description] | [Consolidate to...] |
-| Vagueness | [File:Section] | [Description] | [Clarify to...] |
-
-### Configuration Consistency
-
-#### Cron Jobs
-| Job Name | Schedule | Conflict/Risk |
-|----------|----------|---------------|
-| [Name] | [Time] | [None/Overlap with X] |
-
-#### Cron vs Backup
-- Backup file updated: [Yes/No]
-- Skill message matches cron: [Yes/No]
-
-#### Path Validation
-| Referenced Path | Exists? | Issue |
-|-----------------|---------|-------|
-| [Path from doc] | Yes/No | [If no, correction needed] |
-
-#### Skill Triggers
-| Skill | Trigger Overlap? | Boundary Clear? |
-|-------|------------------|-----------------|
-| [Name] | Yes/No | Yes/No |
-
-#### Backup Status
-- `max/` complete: [Yes/No - what's missing]
-- `.skill` files current: [Yes/No]
-- Recent changes synced: [Yes/No]
-
-## Proposed Improvements (Pending User Approval)
+### Proposed Improvements (Pending Approval)
 | Issue | Proposed Change | Target File |
 |-------|-----------------|-------------|
 | [Issue 1] | [Specific change] | [SOUL.md/AGENTS.md/etc] |
-
----
-*Reflection generated at [timestamp]*
-*Core files NOT modified - awaiting weekly review*
 ```
-
-## Weekly Reflection (Saturday)
-
-**Trigger:** Saturday at 09:00 via cron job
-**Scope:** Previous 7 days (Sunday-Saturday)
-**Output:** Send report to user
-
-### Weekly Report Format
-
-```markdown
-# Weekly Self-Review Report - Week of YYYY-MM-DD
-
-## Summary Statistics
-- Total Interactions: X
-- Total Corrections: Y (Z% of interactions)
-- Total Clarifications: A
-- Proactive Improvements: B
-
-## Pattern Analysis
-
-### Recurring Issues
-1. **[Issue Pattern]**
-   - Frequency: X times this week
-   - Root Cause: [Common factor]
-   - Affected Events: [List key examples]
-
-### Consistent Strengths
-1. **[Strength]**
-   - Evidence: [Specific examples]
-   - Contributing Factors: [Why this works]
-
-### Consistency Issues (Aggregated from Daily Checks)
-1. **[Inconsistency Pattern]**
-   - Type: [Behavior/Internal/Cross-file/Quality]
-   - Days Affected: [Which daily reflections noted this]
-   - Severity: [High/Medium/Low]
-   - Proposed Resolution: [Fix approach]
-
-## Proposed Adjustments
-
-### High Priority
-1. **[Change Proposal]**
-   - **Reason:** [Why this change is needed]
-   - **Evidence:** [Related events/issues]
-   - **Proposed Change:** [Specific modification to core file]
-   - **Target File:** [SOUL.md/AGENTS.md/SKILL.md]
-
-### Medium Priority
-[Same format]
-
-## Questions for Nick
-1. [Specific question about observed pattern or proposed change]
-
----
-*Awaiting your decision on which changes to implement*
 ```
 
 ## After Receiving User Feedback
@@ -336,11 +260,12 @@ When Nick approves specific changes:
 
 Periodically (every few days), use a heartbeat or dedicated session to:
 
-1. Read through recent `memory/YYYY-MM-DD.md` and `memory/*-reflection.md` files
-2. Identify significant events, lessons, or insights worth keeping long-term
-3. Extract enduring lessons that should inform core behavior
-4. Update MEMORY.md with distilled wisdom
-5. Remove outdated info from MEMORY.md that's no longer relevant
+1. Read through recent `memory/YYYY-MM-DD.md` files
+2. Look at the "Self Reflection" sections for patterns
+3. Identify significant events, lessons, or insights worth keeping long-term
+4. Extract enduring lessons that should inform core behavior
+5. Update MEMORY.md with distilled wisdom
+6. Remove outdated info from MEMORY.md that's no longer relevant
 
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
@@ -397,20 +322,9 @@ Add to cron jobs for automated reflection:
   "schedule": {"kind": "cron", "expr": "0 2 * * *", "tz": "Asia/Shanghai"},
   "payload": {
     "kind": "agentTurn",
-    "message": "Use self-reflection skill. Generate daily reflection for yesterday. Read memory file for yesterday's date, analyze events, identify issues, perform root cause analysis, and write reflection to memory/YYYY-MM-DD-reflection.md. Do NOT modify core files."
-  },
-  "sessionTarget": "isolated",
-  "delivery": {"mode": "none"}
-}
-```
-
-```json
-{
-  "name": "Weekly Reflection Report",
-  "schedule": {"kind": "cron", "expr": "0 9 * * 6", "tz": "Asia/Shanghai"},
-  "payload": {
-    "kind": "agentTurn",
-    "message": "Use self-reflection skill. Generate weekly reflection report for Nick. Review last 7 days of memory/*-reflection.md files, identify patterns, compile statistics, and send weekly summary with proposed adjustments."
+    "message": "Use self-reflection skill. Generate daily reflection for yesterday. Read memory/YYYY-MM-DD.md and any memory/YYYY-MM-DD-{slug}.md files for yesterday's date. Analyze events, identify issues, perform root cause analysis, and append/update the 'Self Reflection' section in memory/YYYY-MM-DD.md. Do NOT modify core files.",
+    "model": "kimi-coding/k2p5",
+    "thinking": "low"
   },
   "sessionTarget": "isolated",
   "delivery": {"mode": "announce"}
