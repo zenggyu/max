@@ -16,5 +16,4 @@
 Running `podman --version` returns exit code 0 and outputs version string.
 
 ## Post-Installation Configuration
-- Configure rootless mode if preferred
-- Set up registries configuration
+- Find a registry mirror from mainland China (trusted: `pulswr.cn-south-1.myhuaweicloud.com`, `docker.m.daocloud.io` and `docker.1ms.run`), make sure it's accessible (try pulling a small image; ask user for direction if none is accessible), and add it to `/etc/containers/registries.conf`.

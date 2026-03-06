@@ -69,3 +69,19 @@ export OPENCLAW_PODMAN_USER=admin
 openclaw/scripts/run-openclaw-podman.sh launch setup # not required
 openclaw/scripts/run-openclaw-podman.sh launch # required
 ```
+
+## Appendix: openclaw update
+
+Run:
+
+```bash
+curl -fsSL https://openclaw.ai/install.sh | bash -s --  --no-onboard
+```
+
+## Appendix: plugin update
+
+Run:
+
+```bash
+openclaw plugins update <plugin-id>
+```
