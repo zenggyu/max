@@ -138,5 +138,11 @@ for pid in $(pgrep -f 'yunmai-daemon|yunmai-updater|Chrome-yunmai'); do
   echo "PID $pid [$ns_name]: $cmd"
 done
 ```
-
+W
 If the setup is correct, you should see that `yunmai-daemon`, `yunmai-updater`, and the "Chrome-yunmai" process are all running in the `yunmai_ns` namespace, and you can use the "Chrome-yunmai" application to access intranet resources through the Yunmai VPN.
+
+## Additional Notes
+
+Podman uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But with the network namespace setup, the delegation will break if podman runs in the default network namespace, and there will be problems when pulling image or downloading files from the internet. A solution is adding `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>`. Note that pulling images or downloading files from the intranet by running podman in the VPN namespace works as expected (so there's no need for `--network` or `--dns`).
+
+This issue may also affect other software that use special DNS resolution method.
