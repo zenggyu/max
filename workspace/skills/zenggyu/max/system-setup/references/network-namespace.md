@@ -143,6 +143,6 @@ If the setup is correct, you should see that `yunmai-daemon`, `yunmai-updater`, 
 
 ## Additional Notes
 
-Podman uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But with the network namespace setup, the delegation will break if podman runs in the default network namespace, and there will be problems when pulling image or downloading files from the internet. A solution is adding `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>`. Note that pulling images or downloading files from the intranet by running podman in the VPN namespace works as expected (so there's no need for `--network` or `--dns`).
+Podman uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But if the VPN client enforces a DNS server, the delegation will break if podman runs in the default network namespace. There will be problems when downloading files from the internet inside the container. A solution is to add the `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>` (such as `8.8.8.8`). Note that downloading files from the intranet by running podman in the VPN namespace works as expected (so there's no need for `--network` or `--dns`).
 
-This issue may also affect other software that use special DNS resolution method.
+This issue may also affect other software that use special DNS forwarding method.
