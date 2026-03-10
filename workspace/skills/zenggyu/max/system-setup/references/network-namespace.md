@@ -109,7 +109,7 @@ Version=1.0
 Name=Chrome-yunmai
 GenericName=Web Browser in yunmai namespace
 Comment=Access the Internet in yunmai network namespace
-Exec=/bin/bash -c 'sudo /usr/sbin/ip netns exec yunmai_ns runuser -u "$USER" -- /usr/bin/google-chrome --class=Chrome-yunmai --user-data-dir="$HOME/.config/google-chrome-yunmai %U"'
+Exec=/bin/bash -c 'sudo /usr/sbin/ip netns exec yunmai_ns runuser -u "$USER" -- env GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx DISPLAY=:1 /usr/bin/google-chrome --class=Chrome-yunmai --user-data-dir="$HOME/.config/google-chrome-yunmai" %U'
 StartupNotify=true
 Terminal=false
 Icon=/usr/share/icons/breeze/categories/32/applications-internet.svg
@@ -143,6 +143,7 @@ If the setup is correct, you should see that `yunmai-daemon`, `yunmai-updater`, 
 
 ## Additional Notes
 
-Podman uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But if the VPN client enforces a DNS server, the delegation will break if podman runs in the default network namespace. There will be problems when downloading files from the internet inside the container. A solution is to add the `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>` (such as `8.8.8.8`). Note that downloading files from the intranet by running podman in the VPN namespace works as expected (so there's no need for `--network` or `--dns`).
+Here are some common issues and solutions related to network namespace:
 
-This issue may also affect other software that use special DNS forwarding method.
+- Container runtime (such as podman) uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But if the VPN client (e.g., Yunmai) enforces a DNS server, the delegation could break. Containers would fail to resolve domain name when launched from the default namespace, causing problems like internet download failures. A solution is to add the `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>` (such as `8.8.8.8`). Note that downloading files from the intranet by launching containers in the VPN namespace works as expected (so there's no need for `--network` or `--dns` in this case).
+- Input methods (such as fcitx) use socket connection, but the connection is isolated by network namespace. When an application (e.g., web browser) launches from a non-default namespace, the input method in the default namespace would not work. the solution is to share the socket file by exporting environment variables (`GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx DISPLAY=:1` for fcitx, see the `.desktop` example above). Note that different input methods (e.g., fcitx, fcitx5, ibus) require different environment variables.
