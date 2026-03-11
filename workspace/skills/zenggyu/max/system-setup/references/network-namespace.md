@@ -85,15 +85,27 @@ Requires=yunmai-ns.service
 
 [Service]
 NetworkNamespacePath=/run/netns/yunmai_ns
+ReadOnlyPaths=/etc/resolv.conf
 ```
 
-Then reload systemd and restart the services:
+Here are some explanations on the use of `ReadOnlyPaths` under the `[Service]` section. VPN clients may require a proprietary DNS server to access network. In the case of Yunmai, its service puts the proprietary DNS server on the first line of `/etc/resolv.conf`, and keeps it this way by restoring the file whenever it detects modification. However, this may cause various DNS-related connection issues for the default network namespace. Therefore, it is necessary to keep the default setting of `/etc/resolv.conf` and make it readonly to Yunmai's service.
+
+On the other hand, to make the proprietary DNS server available to Yunmai in its own network namespace, create the namespace's own `resolve.conf` file, and put the proprietary DNS server in it (or just copy the setting from `/etc/resolv.conf` when Yunmai is running normally **in the default network namespace**):
+
+```bash
+sudo mkdir -p /etc/netns/yunmai_ns/
+sudo /etc/resolv.conf /etc/netns/yunmai_ns/resolv.conf # Make sure Yunmai is running normally in the default network namespace before executing this command.
+```
+
+After the setup, reload systemd and restart the services:
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl restart yunmai-daemon.service
 sudo systemctl restart yunmai-updater.service
 ```
+
+Since Yunmai's DNS server may still exist in `/etc/resolv.conf`, it's advised to remove the DNS entry manually or reboot the operating system (some service like `systemd-resolved.service` should restore it after reboot).
 
 ## Run Other Applications in the Namespace
 
@@ -138,12 +150,11 @@ for pid in $(pgrep -f 'yunmai-daemon|yunmai-updater|Chrome-yunmai'); do
   echo "PID $pid [$ns_name]: $cmd"
 done
 ```
-W
+
 If the setup is correct, you should see that `yunmai-daemon`, `yunmai-updater`, and the "Chrome-yunmai" process are all running in the `yunmai_ns` namespace, and you can use the "Chrome-yunmai" application to access intranet resources through the Yunmai VPN.
 
 ## Additional Notes
 
 Here are some common issues and solutions related to network namespace:
 
-- Container runtime (such as podman) uses a special gateway for rootless containers to delegate DNS resolution to the DNS servers inherited from the host. But if the VPN client (e.g., Yunmai) enforces a DNS server, the delegation could break. Containers would fail to resolve domain name when launched from the default namespace, causing problems like internet download failures. A solution is to add the `--network=host` option (e.g., `podman image build --network=host`); another option is `--dns=<valid_dns_ip>` (such as `8.8.8.8`). Note that downloading files from the intranet by launching containers in the VPN namespace works as expected (so there's no need for `--network` or `--dns` in this case).
 - Input methods (such as fcitx) use socket connection, but the connection is isolated by network namespace. When an application (e.g., web browser) launches from a non-default namespace, the input method in the default namespace would not work. the solution is to share the socket file by exporting environment variables (`GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx DISPLAY=:1` for fcitx, see the `.desktop` example above). Note that different input methods (fcitx, fcitx5, ibus, etc.) require different environment variables.
