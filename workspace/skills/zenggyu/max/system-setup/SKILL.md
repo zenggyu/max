@@ -1,169 +1,122 @@
 ---
 name: system-setup
-description: System environment setup and software installation for Linux and Windows. Use when user explicitly requests system setup, software installation, environment configuration, or configuration repair.
+description: Guide for system software installation and configuration. Use whenever software installation or environment configuration is required (by user explicit request or agent initiative).
 ---
 
 # System Setup
 
-Principle-driven system software installation and configuration.
+This skill provides guidance for system software installation and configuration.
 
 ## Structure
 
-- **SKILL.md** — General principles, workflow, log format. Read first for all installations.
-- **references/<name>.md** — Per-software: prerequisites, official URL, user preferences, verification criteria, post-install config. Read before installing each software.
+- `SKILL.md` — General workflow and preferences. Read first for all installation and configuration tasks.
+- `references/*.md` — Per-software info, including official URLs, installation/configuration instructions, verification criteria. Read as needed for software-specific task.
 
-**Priority:** software.md > SKILL.md > agent reasoning
+## General Workflow
 
-## Workflow
+1. **Receive requests** — User requests or agent initiates software installation or environment configuration.
+2. **Check references** — Search `references/` for relevant reference file(s) and read.
+    - do not read irrelevant reference files
+    - if no reference is found and the change has system/user-level impact and is persistent (as opposed to local or temporary), stick with the general guidance provided by this skill, be extra careful in the following steps, and ask user proactively.
+3. **Plan** — Choose installation/configuration method:
+    - check system information (CPU architecture, operating system version, etc.)
+    - choose installation/configuration method based on system information, software-specific preferences, and general guidance.
+4. **Execute** — Perform the installation/configuration actions:
+    - when errors or unexpected issues occur, first consult the official documentation for solution (use the url provided in the reference file)
+    - if the official url is not provided or does not help, ask user for guidance
+    - do not implement custom hacks or workarounds without user approval
+    - do not trust unofficial sources or unverified solutions
+5. **Verify** — Confirm installation/configuration is successful:
+    - follow verification steps in the reference file
+    - if reference file does not exist or does not provide verification steps, perform basic checks to ensure software is functional
+    - if the verification step produces test files or results in changes only intended for verification, clean them up afterwards
+6. **Log and report** — Record all operations and summarised results, and put them in a report under a temporary directory (e.g., `/tmp` for Linux).
 
-1. **Receive request** — User requests software installation.
+Repeat steps 2-6 for each installation/configuration task.
 
-2. **Clarify scope** — If unclear which software to install, ask user to clarify. For Linux users, also suggest adding `apt/yum update/install` commands (nothing more) to sudoers policy to run with NOPASSWD.
+## General Preferences
 
-3. **Check availability** — For each requested software:
-   - If not in `references/*.md`, skip and inform user.
-   - If available, proceed.
+### Source of Truth
 
-4. **Read reference** — Read `references/<name>.md` for official URL, preferences, verification criteria, config requirements.
+In order of priority (from high to low; when in conflict, follow the higher priority source):
 
-5. **Plan** — Choose installation method per operating system (Windows or Linux, Debian or Redhat, release version, etc.), software-specific preferences and general principles.
+- User instruction
+- Software-specific reference files: `references/*.md`
+- General guidance: `SKILL.md`
+- Official sources ("official" means directly provided or explicitly endorsed by user or software vendor; watch out for impersonation)
 
-6. **Execute** — Install following official guide from reference URL.
+Never trust anything except the sources listed above, unless user explicitly approves. For example, information from search engines, forums, or social media should not be trusted without approval. Do not blindly follow links that claim to be official.
 
-7. **Configure** — Apply post-install configuration per reference file.
+Examples of official sources:
 
-8. **Verify** — Confirm functional per reference definition.
+- URLs specified in user prompt or `references/*.md`
+- Well known vendor websites  (`https://cran.r-project.org/`, `https://www.python.org/`, etc.) and repositories (`docker.io`, `https://cloud.r-project.org/bin/`, `https://github.com/openclaw/openclaw`, etc.) 
+- It's okay to use mirror sites provided by authoritive organizations (e.g., university/big company owned mirror sites like `https://mirrors.tuna.tsinghua.edu.cn/CRAN`, or `https://mirrors.aliyun.com/pypi/`), but only when the primary source is unavailable or too slow; ask user if unsure about whether an organization should be considered "authoritive"
 
-9. **Log** — Record all details per Trackable principle.
+### Be Appropriately Conservative
 
-Repeat steps 4-9 for each software. Clean up temporary changes when all done.
+Choose options that are up-to-date, robust, and have minimal requirements/impact:
 
-## General Principles
+- When choosing software versions, prefer the latest stable version over the latest unstable or old stable ones
+- Prefer user-level (e.g., under `~/`, or use virtual environments) over system-level installation and configuration
+- Prefer modern package managers that does a better job on dependency management, isolation, and simplifies installation (e.g., `uv` over `pip`, `bun` over `npm`)
+- Prefer solutions that present lower risk (e.g., `podman` rootless container over `docker` root container)
+- Prefer solutions that are more widely adopted and have better community support (e.g., `apt` over `snap` on Ubuntu)
+- Prefer existing tools and workflows over introducing new ones (e.g., `apt` over `flatpak` on Ubuntu), unless there is a good reason to do otherwise (e.g., if a software is available both from `uv` and `apt`, prefer `uv` because it offers better isolation and dependency management)
+- Prefer containerized solutions for services like databases, web servers, and other complex applications (exception: simple services or client-side tools like `psql`)
+- General preference order of package managers: language-specific (`uv`, `bun`, .etc) > user-level (`homebrew`, `chocolatey`, .etc) > system (`apt`, `yum`, .etc) > universal (`snap`, `flatpak`, .etc)
+- Create backups before deleting or modifying existing files
+- When uncertain, ask for user guidance
 
-1. **Official Sources Only** — Use sources explicitly endorsed by the software vendor, and follow official installation/troubleshooting guide.
+### Be Clean
 
-   **Priority:** URL in software's .md file > general official documentation
-   
-   **GOOD:**
-   - URL specified in software's .md file (highest priority)
-   - Official vendor websites (nodejs.org, docker.com)
-   - Official package repositories (vendor apt repos, Microsoft Store)
-   - Official install scripts on vendor's verified domains
-   - Official language registries (npmjs.com, pypi.org, crates.io)
-   - Pause and ask user after official troubleshooting guide does not help
-   
-   **BAD:**
-   - Random GitHub repos not owned by the vendor
-   - Third-party PPAs without vendor endorsement
-   - Unverified "mirror" sites
-   - Search for solutions from random sources online, or implement custom hacks when installation or verification fails
+Keep persistent changes minimal:
 
-2. **Prefer Simplicity** — Choose options that are isolated, stable, and have minimal dependencies.
+- Never install anything beyond required, unless explicitly approved by the user
+- Revert temporary changes (environment variables, configurations, processes, etc.) for verification after use
+- Temporary files should be created in `/tmp/` on Linux or `%TEMP%` on Windows and deleted after use
 
-   **GOOD:**
-   - User-space installs: uv/venv for Python, nvm for Node.js, Scoop/Chocolatey on Windows
-   - Installing binaries to `~/.local/bin` instead of `/usr/local/bin`
-   - Storing configs in `~/.config/` instead of `/etc/`
-   - Using apt on Ubuntu (included by default) over flatpak (requires additional installation) and snap (resource heavy)
-   - Latest stable version over old stable or unstable
-   - Asking before privilege escalation (except `apt update/install`, system-wide services)
-   
-   **BAD:**
-   - Using pip for system Python (poor dependency management, conflicts likely)
-   - Adding new package managers when existing ones suffice
-   - Installing global npm packages with sudo
-   - Windows MSI installers requiring admin when user-space alternatives exist
+### Be Transparent
 
-3. **Trackable** — Maintain a single log file with complete records for all software installed.
+Create a report for each software installation task:
 
-   **Log location:** 
-   - Linux: `/tmp/system-setup-<random>.log`
-   - Windows: `%TEMP%\system-setup-<random>.log`
-   
-   Always inform user of the log file path.
-   
-   **Log template (repeat for each software):**
-   
-   | Field | Description |
-   |-------|-------------|
-   | SOFTWARE | Name of the software installed |
-   | START_TIME | When installation began (YYYY-MM-DD HH:MM:SS) |
-   | END_TIME | When installation completed (YYYY-MM-DD HH:MM:SS) |
-   | SOURCE | URL used; explain if multiple options were available |
-   | VERSION | Version installed; explain if multiple versions were available |
-   | ACTION | Commands/method used; explain if multiple methods were available |
-   | CONFIG | Configuration changes made post-install |
-   | TEMP | Temporary changes; explain if any remain unreverted |
-   | VERIFY | How functionality was verified; explain if FAILED |
-   | RESULT | SUCCESS / FAILED / PARTIAL; explain if not SUCCESS |
-   
-   **Example:**
-   ```
-   SOFTWARE: uv
-   START_TIME: 2024-02-14 15:30:00
-   END_TIME: 2024-02-14 15:31:45
-   SOURCE: https://docs.astral.sh/uv/getting-started/installation/ (official, recommended)
-   VERSION: 0.5.24 (latest stable)
-   ACTION: curl -LsSf https://astral.sh/uv/install.sh | sh (official install script)
-   CONFIG: Added to PATH via ~/.bashrc
-   TEMP: None
-   VERIFY: uv --version returned 0.5.24
-   RESULT: SUCCESS
-   ```
+- Report location:
+   - Linux: `/tmp/system-setup-<yyyymmddHHMMSS>-<random>.log`
+   - Windows: `%TEMP%\system-setup-<yyyymmddHHMMSS>-<random>.log`\
+- This report should be created at the beginning of the task, and maintained during the installation process
+- Inform user about the report after the task completes or aborts
+- Use report template (see below)
 
-4. **Be Clean** — Keep persistent changes minimal. Revert temporary changes.
+Report template (repeat for each software):
 
-   **GOOD:**
-   - Only installing what was requested
-   - Creating temporary test files in `/tmp/` that auto-clean
-   - Reverting test configurations after verification
-   - Documenting any unrevertable changes in the log
-   
-   **BAD:**
-   - Installing "recommended" extras without asking
-   - Leaving test databases or config files behind
-   - Modifying system configs for temporary tests without reverting
-   - Not documenting changes that couldn't be undone
+| Field | Description |
+|-------|-------------|
+| SOFTWARE | Name of the software installed |
+| START_TIME | When installation began (YYYY-MM-DD HH:MM:SS) |
+| END_TIME | When installation completed (YYYY-MM-DD HH:MM:SS) |
+| SOURCE | URL used; explain if multiple options were available |
+| VERSION | Version installed; explain if multiple versions were available |
+| ACTIONS | Commands/method used; explain if multiple methods were available |
+| CONFIG | Configuration changes made post-install |
+| TEMP | Temporary changes; explain if any remain unreverted |
+| VERIFY | How functionality was verified; explain if FAILED |
+| RESULT | SUCCESS / FAILED / PARTIAL; explain if not SUCCESS |
 
-5. **Verify Functionality** — Confirm the software works correctly.
+Example:
 
-   Each software's reference .md file defines what "functional" means for that software. The definition must be verifiable (e.g., a command that returns a non-error exit status).
-
-6. **When Uncertain, Ask** — Pause and request user direction when:
-   - In doubt about the correct approach
-   - Principles conflict with each other
-   - Software guide is ambiguous or incomplete
-   - Multiple valid options with no clear preference
-   - About to make irreversible changes
-   - Verification fails and resolution is unclear
-
-## Software-Specific Preferences
-
-For each software to install, read its reference file in `references/<name>.md`.
-
-**Template for each `references/<name>.md`:**
-
-```markdown
-# <Software Name>
-
-## Prerequisites
-
-<What the user should do before installation/configuration (obtain service account, API key, etc.)>
-
-## Official Documentation
-- Installation guide: <URL>
-- Configuration guide: <URL>
-- Troubleshooting: <URL> (optional)
-
-## User Preferences
-- Installation method preference: <e.g., uv over pip, nvm over apt>
-- Version preference: <e.g., latest stable, specific version>
-- Other preferences: <any specific choices>
-
-## Definition of Functional
-<Verifiable criteria, e.g., "Running `<command>` returns exit code 0 and outputs version">
-
-## Post-Installation Configuration
-- <Configuration item 1>
-- <Configuration item 2>
 ```
+SOFTWARE: uv
+START_TIME: 2024-02-14 15:30:00
+END_TIME: 2024-02-14 15:31:45
+SOURCE: https://docs.astral.sh/uv/getting-started/installation/ (official, recommended)
+VERSION: 0.5.24 (latest stable)
+ACTIONS: curl -LsSf https://astral.sh/uv/install.sh | sh (official install script)
+CONFIG: Added to PATH via ~/.bashrc
+TEMP: None
+VERIFY: uv --version returned 0.5.24
+RESULT: SUCCESS
+```
+
+## List of Reference Files
+
+See `reference/*`.
