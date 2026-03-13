@@ -65,7 +65,7 @@ Choose options that are up-to-date, robust, and have minimal requirements/impact
 - Prefer existing tools and workflows over introducing new ones (e.g., `apt` over `flatpak` on Ubuntu), unless there is a good reason to do otherwise (e.g., if a software is available both from `uv` and `apt`, prefer `uv` because it offers better isolation and dependency management).
 - Prefer containerized solutions for services like databases, web servers, and other complex applications (exception: simple services or client-side tools like `psql`).
 - General preference order of package managers: language-specific (`uv`, `bun`, etc.) > user-level (`homebrew`, `chocolatey`, etc.) > system (`apt`, `yum`, etc.) > universal (`snap`, `flatpak`, etc.).
-- Unless user explicitly requests or it is clear that the software to be installed is project-specific, consistently install the software in a conventional user-level global location (`~/.uv-global` for `uv`, `~/.bun-global` for `bun`, `~/.np-global` for `npm`, `~/.linuxbrew` for `homebrew`, `~/.local` for other tools).
+- Unless user explicitly requests or it is clear that the software to be installed is project-specific, consistently install the software in a conventional user-level global location (`~/.uv-global` for `uv`, `~/.bun-global` for `bun`, `~/.np-global` for `npm`, `~/.linuxbrew` for `homebrew`, `~/.local` for other single-file executables).
 - Create backups before deleting or modifying existing files.
 - When uncertain, ask for user guidance.
 
