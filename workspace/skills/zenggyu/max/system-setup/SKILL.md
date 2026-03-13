@@ -93,5 +93,5 @@ Create a report for each software installation task:
     ```
 - Also include problems encountered, choices made, and the reasoning during the installation process.
 - If there were any temporary changes that could not be reverted, document them.
-- If any outdated information/practices from the reference file were discovered (by comparing with the latest official sources), document it and inform user.
+- If any outdated information/practices from the reference file were discovered (by comparing with the latest official sources), document it and inform user (never modify the reference file directly).
 - Inform user about the report after the task completes or aborts.
