@@ -33,7 +33,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Note the reason to setup a user level service instead of a system level service is that the host specification for `cloudvm` (i.e., `~/.ssh/config`) is defined in the user's home directory, so system level service would not see it unless using absolute path (which is tedious).
+Note the reason to setup a user level service instead of a system level service is that the host specification for `cloudvm` (i.e., `~/.ssh/config`) is defined in the user's home directory, so system level service would not see it unless using absolute path (which is inconvenient).
 
 After creating the unit file, run the following commands to start and examine the status of the service；
 
